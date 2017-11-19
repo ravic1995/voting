@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
-import './App.css';
 import TopicContainer from "./TopicContainer"
 import NewTopic from "./NewTopic"
 
@@ -8,21 +7,37 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      datas: [] // datas is array of Object
+      topics: [
+      {
+        title: "Title 1",
+        description: "Description of 1st topic",
+        vote: 1
+      },
+      {
+        title: "Title 2",
+        description: "Description of 2nd topic",
+        vote: 9
+      },
+      {
+        title: "Title 3",
+        description: "Description of 3rd topic",
+        vote: 4
+      }
+      ] 
     }
   };
 
-  //Function to add topic in our datas state
+  //Add new topic to state 
   submitTopic = (data) => {
     this.setState({
-      datas: this.state.datas.concat(data)
-    }, this.sorting);
+      topics: this.state.topics.concat(data)
+    });
   };
 
-  //Function to increase the vote by 1
+  //Increase vote by 1 and sort
   upvote = (title) => {
     this.setState({
-      datas : this.state.datas.map((topic) => {
+      topics : this.state.topics.map((topic) => {
         if(topic.title === title) {
           return Object.assign({}, topic, {
             vote: topic.vote +1,
@@ -31,13 +46,13 @@ class App extends Component {
           return topic;
         }
       })
-    }, this.sorting)
+    })
   }
 
   //Function to decrease the vote by 1
   downvote = (title) => {
     this.setState({
-      datas : this.state.datas.map((topic) => {
+      topics : this.state.topics.map((topic) => {
         if(topic.title === title) {
           return Object.assign({}, topic, {
             vote: topic.vote - 1,
@@ -46,36 +61,29 @@ class App extends Component {
           return topic;
         }
       })
-    }, this.sorting)
+    })
   }
 
   //Sorting function. Will be used as the parameter for sorting in .sort()
-  sortingformula = (a,b) => {
-    if(a.vote < b.vote){
+  comparator = (first, second) => {
+    if(first.vote < second.vote){
       return 1;
     }
-    if(a.vote > b.vote){
+    if(first.vote > second.vote){
       return -1;
     }
     else {
       return 0;
     }
   }
-
-  //Function to sort objects in datas base on the number or vote
-  sorting = () => {
-    const dataSorted = this.state.datas;
-    dataSorted.sort(this.sortingformula);
-    
-    this.setState({
-      datas: dataSorted
-    });
-  }
+  
   render() {
+    const topicsorted = this.state.topics;
+    topicsorted.sort(this.comparator);
     return (
-      <div className="App">
+      <div>
         <NewTopic submitTopic={this.submitTopic} />
-        <TopicContainer topics={this.state.datas} upvote={this.upvote} downvote={this.downvote} />
+        <TopicContainer topics={topicsorted} upvote={this.upvote} downvote={this.downvote} />
       </div>
     );
   }
