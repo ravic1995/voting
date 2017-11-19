@@ -1,8 +1,20 @@
+//@flow
 import React, { Component } from 'react';
 import Topic from "./Topic.js";
 
-class TopicContainer extends Component {
+type TopicType = {
+  title: string,
+  description?:string,
+  vote: number,
+};
 
+type Props = {
+  topics: Array<TopicType>,
+  upvote: (string) => void,
+  downvote: (string) => void,
+};
+
+class TopicContainer extends Component <Props> {
   render() {
     const topicsObject = this.props.topics.map((topic,key) => {
       return <Topic

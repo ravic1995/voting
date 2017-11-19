@@ -1,10 +1,25 @@
+//@flow
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import TopicContainer from "./TopicContainer"
 import NewTopic from "./NewTopic"
 
-class App extends Component {
-  constructor(props) {
+type TopicType = {
+  title: string,
+  description?:string,
+  vote: number,
+};
+
+type State = {
+  topics: Array<TopicType>,
+};
+
+type Props = {
+};
+
+
+class App extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       topics: [
@@ -28,14 +43,15 @@ class App extends Component {
   };
 
   //Add new topic to state 
-  submitTopic = (data) => {
+  submitTopic = (data: TopicType) => {
     this.setState({
       topics: this.state.topics.concat(data)
     });
   };
 
   //Increase vote by 1 and sort
-  upvote = (title) => {
+  //$flowFixMe
+  upvote = (title: string) => {
     this.setState({
       topics : this.state.topics.map((topic) => {
         if(topic.title === title) {
@@ -50,7 +66,8 @@ class App extends Component {
   }
 
   //Function to decrease the vote by 1
-  downvote = (title) => {
+  //$flowFixMe
+  downvote = (title: string) => {
     this.setState({
       topics : this.state.topics.map((topic) => {
         if(topic.title === title) {
@@ -65,7 +82,7 @@ class App extends Component {
   }
 
   //Sorting function. Will be used as the parameter for sorting in .sort()
-  comparator = (first, second) => {
+  comparator = (first: TopicType, second: TopicType) => {
     if(first.vote < second.vote){
       return 1;
     }

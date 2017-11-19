@@ -1,18 +1,24 @@
+//@flow
 import React, { Component } from 'react';
 import up from "./up.svg";
 import down from "./down.svg";
 
+type Props = {
+  title: string,
+  vote: number,
+  description?: string,
+  upvote: (title: string) => void,
+  downvote: (title: string) => void,
+};
 
-class Topic extends Component {
+class Topic extends Component<Props> {
   upvotes = () => {
-    console.log("on Render")
     this.props.upvote(this.props.title)
   }
   downvotes = () => {
     this.props.downvote(this.props.title) 
   }
 
-  
   render() {
     return (
       <div>
