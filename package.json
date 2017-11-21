@@ -1,5 +1,5 @@
 {
-  "name": "votes",
+  "name": "voting",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -17,7 +17,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "flow": "flow",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -27,6 +29,7 @@
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.24.1",
     "flow-bin": "^0.59.0",
+    "gh-pages": "^1.1.0",
     "jest": "^21.2.1",
     "react-test-renderer": "^16.1.1"
   }
